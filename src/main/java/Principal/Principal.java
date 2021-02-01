@@ -155,6 +155,17 @@ public class Principal {
                             + "Nome do professor: " + disciplina.getProfessor().getNome());
                 }
             }
+            if(escolha.equals("2")){
+                    int id = Integer.valueOf(JOptionPane.showInputDialog(
+                            "Digite o ID da disciplina que deseja buscar"));
+                    Disciplina disciplina = DisciplinaDAO.findById(id);
+                    if (disciplina != null) {
+                        JOptionPane.showMessageDialog(null, "Aluno encontrado!\n"
+                                + "Matricula: " + disciplina.getId() + "\n"
+                                + "Nome: " + disciplina.getNome() + "\n"
+                                + "Nome Professor: " + disciplina.getProfessor().getNome());
+                    }
+            }
 
         } while (!escolha.equals("0"));
     }
