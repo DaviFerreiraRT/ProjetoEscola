@@ -57,7 +57,7 @@ public class DisciplinaDAO {
                 return new Disciplina(id, nome, professor);
 
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhuma disciplina com este ID foi encontrada!");
+                JOptionPane.showMessageDialog(null,"Nenhuma disciplina com este ID foi encontrada!");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
