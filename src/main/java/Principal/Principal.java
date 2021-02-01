@@ -166,7 +166,6 @@ public class Principal {
                                 + "Nome Professor: " + disciplina.getProfessor().getNome());
                     }
             }
-
         } while (!escolha.equals("0"));
     }
 }
