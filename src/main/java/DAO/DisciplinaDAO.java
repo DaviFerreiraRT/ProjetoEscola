@@ -45,7 +45,7 @@ public class DisciplinaDAO {
         Professor professor = ProfessorDAO.findById(id);
         try {
 
-            PreparedStatement ps = connection.prepareStatement("" + "SELECT * FROM DISCIPLINA WHERE ID = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM DISCIPLINAS WHERE ID = ?");
 
             ps.setInt(1, id);
 
@@ -57,7 +57,7 @@ public class DisciplinaDAO {
                 return new Disciplina(id, nome, professor);
 
             } else {
-                JOptionPane.showMessageDialog(null, "" + "Nenhuma disciplina com este ID foi encontrada!");
+                JOptionPane.showMessageDialog(null, "Nenhuma disciplina com este ID foi encontrada!");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
