@@ -3,8 +3,10 @@ package Principal;
 import DAO.AlunoDAO;
 import DAO.DisciplinaDAO;
 import DAO.ProfessorDAO;
+import DAO.TurmaDAO;
 import Models.Aluno;
 import Models.Professor;
+import Models.Turma;
 import Models.Disciplina;
 import javax.swing.JOptionPane;
 import Database.Database;
@@ -15,157 +17,159 @@ import Database.Database;
  */
 public class Principal {
 
-    public static void main(String[] args) {
-        Database.connect();
-        menuPrincipal();
+	public static void main(String[] args) {
+		Database.connect();
+		menuPrincipal();
 
-        Database.disconnect();
-    }
+		Database.disconnect();
+	}
 
-    public static void menuPrincipal() {
-        String escolha = "0";
+	public static void menuPrincipal() {
+		String escolha = "0";
 
-        do {
-            escolha = JOptionPane.showInputDialog(""
-                    + "1-Aluno\n"
-                    + "2-Professor\n"
-                    + "3-Disciplina\n");
-            if (escolha.equals("1")) {
-                menuAluno();
-            } else if (escolha.equals("2")) {
-                menuProfessor();
-            } else if (escolha.equals("3")) {
-                menuDisciplina();
-            }
+		do {
+			escolha = JOptionPane.showInputDialog("" + "1-Aluno\n" + "2-Professor\n" + "3-Disciplina\n"+"4-Turma\n"+"0-Sair");
+			if (escolha.equals("1")) {
+				menuAluno();
+			} else if (escolha.equals("2")) {
+				menuProfessor();
+			} else if (escolha.equals("3")) {
+				menuDisciplina();
+			} else if (escolha.equals("4")) {
+				menuTurma();
+			}
 
-        } while (!escolha.equals("0"));
-    }
+		} while (!escolha.equals("0"));
+	}
 
-    public static void menuAluno() {
-        String escolha = "0";
+	public static void menuAluno() {
+		String escolha = "0";
 
-        do {
-            escolha = JOptionPane.showInputDialog(""
-                    + "1-Cadastrar aluno\n"
-                    + "2-Buscar aluno\n"
-                    + "3-Editar dados do aluno\n"
-                    + "4-Excluir aluno\n"
-                    + "0-Voltar ao menu principal");
-            if (escolha.equals("1")) {
+		do {
+			escolha = JOptionPane.showInputDialog("" + "1-Cadastrar aluno\n" + "2-Buscar aluno\n"
+					+ "3-Editar dados do aluno\n" + "4-Excluir aluno\n" + "0-Voltar ao menu principal");
+			if (escolha.equals("1")) {
 
-                String nome = JOptionPane.showInputDialog("Digite seu nome");
-                String sexo = JOptionPane.showInputDialog("Digite seu sexo");
-                Aluno aluno = AlunoDAO.create(nome, sexo);
-                if (aluno != null) {
-                    JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!\n"
-                            + "Matricula: " + aluno.getMatricula() + "\n"
-                            + "Nome: " + aluno.getNome() + "\n"
-                            + "Sexo: " + aluno.getSexo());
-                }
+				String nome = JOptionPane.showInputDialog("Digite seu nome");
+				String sexo = JOptionPane.showInputDialog("Digite seu sexo");
+				Aluno aluno = AlunoDAO.create(nome, sexo);
+				if (aluno != null) {
+					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!\n" + "Matricula: " + aluno.getMatricula()
+							+ "\n" + "Nome: " + aluno.getNome() + "\n" + "Sexo: " + aluno.getSexo());
+				}
 
-            } else if (escolha.equals("2")) {
-                int matricula = Integer.valueOf(JOptionPane.showInputDialog(
-                        "Digite a matricula do aluno que deseja buscar"));
-                Aluno aluno = AlunoDAO.findById(matricula);
-                if (aluno != null) {
-                    JOptionPane.showMessageDialog(null, "Aluno encontrado!\n"
-                            + "Matricula: " + aluno.getMatricula() + "\n"
-                            + "Nome: " + aluno.getNome() + "\n"
-                            + "Sexo: " + aluno.getSexo());
-                }
-            } else if (escolha.equals("3")) {
-                int matricula = Integer.valueOf(JOptionPane.showInputDialog(
-                        "Digite a matricula do aluno que deseja remover"));
-                AlunoDAO.removeById(matricula);
-            } else if (escolha.equals("4")) {
-                int matricula = Integer.valueOf(JOptionPane.showInputDialog(
-                        "Digite a matricula do aluno que deseja alterar"));
-                String nome = JOptionPane.showInputDialog("Digite seu nome");
-                String sexo = JOptionPane.showInputDialog("Digite seu sexo");
-                AlunoDAO.update(matricula, nome, sexo);
-            }
+			} else if (escolha.equals("2")) {
+				int matricula = Integer
+						.valueOf(JOptionPane.showInputDialog("Digite a matricula do aluno que deseja buscar"));
+				Aluno aluno = AlunoDAO.findById(matricula);
+				if (aluno != null) {
+					JOptionPane.showMessageDialog(null, "Aluno encontrado!\n" + "Matricula: " + aluno.getMatricula() + "\n"
+							+ "Nome: " + aluno.getNome() + "\n" + "Sexo: " + aluno.getSexo());
+				}
+			} else if (escolha.equals("3")) {
+				int matricula = Integer
+						.valueOf(JOptionPane.showInputDialog("Digite a matricula do aluno que deseja remover"));
+				AlunoDAO.removeById(matricula);
+			} else if (escolha.equals("4")) {
+				int matricula = Integer
+						.valueOf(JOptionPane.showInputDialog("Digite a matricula do aluno que deseja alterar"));
+				String nome = JOptionPane.showInputDialog("Digite seu nome");
+				String sexo = JOptionPane.showInputDialog("Digite seu sexo");
+				AlunoDAO.update(matricula, nome, sexo);
+			}
 
-        } while (!escolha.equals("0"));
-    }
+		} while (!escolha.equals("0"));
+	}
 
-    public static void menuProfessor() {
-        String escolha = "0";
+	public static void menuProfessor() {
+		String escolha = "0";
 
-        do {
-            escolha = JOptionPane.showInputDialog(""
-                    + "1-Cadastrar professor\n"
-                    + "2-Buscar professor\n"
-                    + "3-Editar dados do professor\n"
-                    + "4-Excluir professor\n"
-                    + "0-Voltar ao menu principal");
-            if (escolha.equals("1")) {
-                String nome = JOptionPane.showInputDialog("Digite seu nome");
-                String sexo = JOptionPane.showInputDialog("Digite seu sexo");
-                Professor professor = ProfessorDAO.create(nome, sexo);
-                if (professor != null) {
-                    JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!\n"
-                            + "Matricula: " + professor.getId() + "\n"
-                            + "Nome: " + professor.getNome() + "\n"
-                            + "Sexo: " + professor.getSexo());
-                }
-            } else if (escolha.equals("2")) {
-                int id = Integer.valueOf(JOptionPane.showInputDialog(
-                        "Digite o ID do professor que deseja buscar"));
-                Professor professor = ProfessorDAO.findById(id);
-                if (professor != null) {
-                    JOptionPane.showMessageDialog(null, "Aluno encontrado!\n"
-                            + "Matricula: " + professor.getId() + "\n"
-                            + "Nome: " + professor.getNome() + "\n"
-                            + "Sexo: " + professor.getSexo());
-                }
-            } else if (escolha.equals("3")) {
-                int id = Integer.valueOf(JOptionPane.showInputDialog(
-                        "Digite a matricula do professor que deseja alterar"));
-                String nome = JOptionPane.showInputDialog("Digite seu nome");
-                String sexo = JOptionPane.showInputDialog("Digite seu sexo");
-                ProfessorDAO.update(id, nome, sexo);
-            } else if (escolha.equals("4")) {
-                int id = Integer.valueOf(JOptionPane.showInputDialog(
-                        "Digite o ID do professor que deseja remover"));
-                ProfessorDAO.removeById(id);
-            }
-        } while (!escolha.equals("0"));
-    }
+		do {
+			escolha = JOptionPane.showInputDialog("" + "1-Cadastrar professor\n" + "2-Buscar professor\n"
+					+ "3-Editar dados do professor\n" + "4-Excluir professor\n" + "0-Voltar ao menu principal");
+			if (escolha.equals("1")) {
+				String nome = JOptionPane.showInputDialog("Digite seu nome");
+				String sexo = JOptionPane.showInputDialog("Digite seu sexo");
+				Professor professor = ProfessorDAO.create(nome, sexo);
+				if (professor != null) {
+					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!\n" + "Matricula: " + professor.getId()
+							+ "\n" + "Nome: " + professor.getNome() + "\n" + "Sexo: " + professor.getSexo());
+				}
+			} else if (escolha.equals("2")) {
+				int id = Integer.valueOf(JOptionPane.showInputDialog("Digite o ID do professor que deseja buscar"));
+				Professor professor = ProfessorDAO.findById(id);
+				if (professor != null) {
+					JOptionPane.showMessageDialog(null, "Professor encontrado!\n" + "Matricula: " + professor.getId() + "\n"
+							+ "Nome: " + professor.getNome() + "\n" + "Sexo: " + professor.getSexo());
+				}
+			} else if (escolha.equals("3")) {
+				int id = Integer.valueOf(JOptionPane.showInputDialog("Digite a matricula do professor que deseja alterar"));
+				String nome = JOptionPane.showInputDialog("Digite seu nome");
+				String sexo = JOptionPane.showInputDialog("Digite seu sexo");
+				ProfessorDAO.update(id, nome, sexo);
+			} else if (escolha.equals("4")) {
+				int id = Integer.valueOf(JOptionPane.showInputDialog("Digite o ID do professor que deseja remover"));
+				ProfessorDAO.removeById(id);
+			}
+		} while (!escolha.equals("0"));
+	}
 
-    public static void menuDisciplina() {
-        String escolha = "0";
+	public static void menuDisciplina() {
+		String escolha = "0";
 
-        do {
-            escolha = JOptionPane.showInputDialog(""
-                    + "1-Cadastrar disciplina\n"
-                    + "2-Buscar disciplina\n"
-                    + "3-Editar dados do disciplina\n"
-                    + "4-Excluir disciplina\n"
-                    + "0-Voltar ao menu principal");
-            if (escolha.equals("1")) {
-                String nome = JOptionPane.showInputDialog("Digite nome da "
-                        + "disciplina");
-                int id = Integer.valueOf(JOptionPane.showInputDialog(
-                        "Digite o id do professor da disciplina"));
-                Disciplina disciplina = DisciplinaDAO.create(nome, id);
-                if (disciplina != null) {
-                    JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!\n"
-                            + "Codigo: " + disciplina.getId() + "\n"
-                            + "Nome da disciplina: " + disciplina.getNome() + "\n"
-                            + "Nome do professor: " + disciplina.getProfessor().getNome());
-                }
-            }
-            if(escolha.equals("2")){
-                    int id = Integer.valueOf(JOptionPane.showInputDialog(
-                            "Digite o ID da disciplina que deseja buscar"));
-                    Disciplina disciplina = DisciplinaDAO.findById(id);
-                    if (disciplina != null) {
-                        JOptionPane.showMessageDialog(null, "Aluno encontrado!\n"
-                                + "Matricula: " + disciplina.getId() + "\n"
-                                + "Nome: " + disciplina.getNome() + "\n"
-                                + "Nome Professor: " + disciplina.getProfessor().getNome());
-                    }
-            }
-        } while (!escolha.equals("0"));
-    }
+		do {
+			escolha = JOptionPane.showInputDialog("" + "1-Cadastrar disciplina\n" + "2-Buscar disciplina\n"
+					+ "3-Editar dados do disciplina\n" + "4-Excluir disciplina\n" + "0-Voltar ao menu principal");
+			if (escolha.equals("1")) {
+				String nome = JOptionPane.showInputDialog("Digite nome da " + "disciplina");
+				int id = Integer.valueOf(JOptionPane.showInputDialog("Digite o id do professor da disciplina"));
+				Disciplina disciplina = DisciplinaDAO.create(nome, id);
+				if (disciplina != null) {
+					JOptionPane.showMessageDialog(null,
+							"Cadastrado com sucesso!\n" + "Codigo: " + disciplina.getId() + "\n" + "Nome da disciplina: "
+									+ disciplina.getNome() + "\n" + "Nome do professor: " + disciplina.getProfessor().getNome());
+				}
+			}
+			if (escolha.equals("2")) {
+				int id = Integer.valueOf(JOptionPane.showInputDialog("Digite o ID da disciplina que deseja buscar"));
+				Disciplina disciplina = DisciplinaDAO.findById(id);
+				if (disciplina != null) {
+					JOptionPane.showMessageDialog(null,
+							"Disciplina encontrada!\n" + "Matricula: " + disciplina.getId() + "\n" + "Nome: "
+									+ disciplina.getNome() + "\n" + "Nome Professor: " + disciplina.getProfessor().getNome());
+				}
+			}
+		} while (!escolha.equals("0"));
+	}
+	public static void menuTurma() {
+		String escolha = "0";
+
+		do {
+			escolha = JOptionPane.showInputDialog("" + "1-Cadastrar turma\n" + "2-Buscar turma\n"
+					+ "3-Editar dados do turma\n" + "4-Excluir turma\n" + "0-Voltar ao menu principal");
+			if (escolha.equals("1")) {
+				String nome = JOptionPane.showInputDialog("Digite nome da turma ");
+				int idProfessor = Integer.valueOf(JOptionPane.showInputDialog("Digite o id do professor da disciplina"));
+				int idDisciplina = Integer.valueOf(JOptionPane.showInputDialog("Digite o id da disciplina"));
+				Professor professor = ProfessorDAO.findById(idProfessor);
+				Disciplina disciplina = DisciplinaDAO.findById(idDisciplina);
+
+				Turma turma = TurmaDAO.create(nome, idProfessor,idDisciplina);
+				if (turma != null) {
+					JOptionPane.showMessageDialog(null,
+							"Cadastrado com sucesso!\n" + "Codigo: " + turma.getId() + "\n" + "Nome da disciplina: "
+									+ turma.getNome() + "\n" + "Nome do professor: " + turma.getProfessor().getNome());
+				}
+			}
+			if (escolha.equals("2")) {
+				int id = Integer.valueOf(JOptionPane.showInputDialog("Digite o ID da disciplina que deseja buscar"));
+				Disciplina disciplina = DisciplinaDAO.findById(id);
+				if (disciplina != null) {
+					JOptionPane.showMessageDialog(null,
+							"Disciplina encontrada!\n" + "Matricula: " + disciplina.getId() + "\n" + "Nome: "
+									+ disciplina.getNome() + "\n" + "Nome Professor: " + disciplina.getProfessor().getNome());
+				}
+			}
+		} while (!escolha.equals("0"));
+	}
 }
